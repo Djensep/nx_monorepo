@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/api-gateway"
+    },
+    {
+      "path": "./apps/products"
+    },
+    {
+      "path": "./apps/user-e2e"
+    },
+    {
+      "path": "./apps/user"
+    },
+    {
+      "path": "./apps/orders-e2e"
+    },
+    {
+      "path": "./apps/orders"
+    }
+  ]
+}
