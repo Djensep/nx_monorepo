@@ -56,7 +56,8 @@
       "exclude": [
         "apps/products-e2e/**/*",
         "apps/user-e2e/**/*",
-        "apps/orders-e2e/**/*"
+        "apps/orders-e2e/**/*",
+        "apps/catalog-e2e/**/*"
       ]
     }
   ],

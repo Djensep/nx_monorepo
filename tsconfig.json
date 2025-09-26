@@ -20,6 +20,12 @@
     },
     {
       "path": "./apps/orders"
+    },
+    {
+      "path": "./apps/catalog-e2e"
+    },
+    {
+      "path": "./apps/catalog"
     }
   ]
 }

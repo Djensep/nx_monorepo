@@ -10,7 +10,7 @@ const swcJestConfig = JSON.parse(
 swcJestConfig.swcrc = false;
 
 export default {
-  displayName: '@nx-microserv/products',
+  displayName: '@nx-microserv/catalog',
   preset: '../../jest.preset.js',
   testEnvironment: 'node',
   transform: {

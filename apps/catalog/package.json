@@ -1,5 +1,5 @@
 {
-  "name": "@nx-microserv/user",
+  "name": "@nx-microserv/catalog",
   "version": "0.0.1",
   "private": true,
   "nx": {
@@ -11,7 +11,7 @@
           "args": [
             "--node-env=production"
           ],
-          "cwd": "apps/user"
+          "cwd": "apps/catalog"
         },
         "configurations": {
           "development": {
@@ -28,8 +28,8 @@
         "cache": true,
         "executor": "@nx/js:prune-lockfile",
         "outputs": [
-          "{workspaceRoot}/apps/user/dist/package.json",
-          "{workspaceRoot}/apps/user/dist/package-lock.json"
+          "{workspaceRoot}/apps/catalog/dist/package.json",
+          "{workspaceRoot}/apps/catalog/dist/package-lock.json"
         ],
         "options": {
           "buildTarget": "build"
@@ -41,7 +41,7 @@
         ],
         "cache": true,
         "outputs": [
-          "{workspaceRoot}/apps/user/dist/workspace_modules"
+          "{workspaceRoot}/apps/catalog/dist/workspace_modules"
         ],
         "executor": "@nx/js:copy-workspace-modules",
         "options": {
@@ -63,15 +63,15 @@
           "build"
         ],
         "options": {
-          "buildTarget": "@nx-microserv/user:build",
+          "buildTarget": "@nx-microserv/catalog:build",
           "runBuildTargetDependencies": false
         },
         "configurations": {
           "development": {
-            "buildTarget": "@nx-microserv/user:build:development"
+            "buildTarget": "@nx-microserv/catalog:build:development"
           },
           "production": {
-            "buildTarget": "@nx-microserv/user:build:production"
+            "buildTarget": "@nx-microserv/catalog:build:production"
           }
         }
       },
