@@ -11,6 +11,24 @@
     },
     {
       "path": "./apps/product"
+    },
+    {
+      "path": "./apps/Catalog-e2e"
+    },
+    {
+      "path": "./apps/Catalog"
+    },
+    {
+      "path": "./apps/orders-e2e"
+    },
+    {
+      "path": "./apps/orders"
+    },
+    {
+      "path": "./apps/payments-e2e"
+    },
+    {
+      "path": "./apps/payments"
     }
   ]
 }
