@@ -7,25 +7,10 @@
       "path": "./apps/api-gateway"
     },
     {
-      "path": "./apps/products"
-    },
-    {
-      "path": "./apps/user-e2e"
-    },
-    {
-      "path": "./apps/user"
-    },
-    {
-      "path": "./apps/orders-e2e"
-    },
-    {
-      "path": "./apps/orders"
-    },
-    {
-      "path": "./apps/catalog-e2e"
-    },
-    {
       "path": "./apps/catalog"
+    },
+    {
+      "path": "./apps/product"
     }
   ]
 }

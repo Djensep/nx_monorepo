@@ -8,24 +8,17 @@ import { MICROSERVICE_CLIENTS } from '../clients.enum';
   imports: [
     ClientsModule.register([
       {
-        name: MICROSERVICE_CLIENTS.ORDERS_SERVICE,
+        name: MICROSERVICE_CLIENTS.CATALOG_SERVICE,
         transport: Transport.TCP,
         options: {
-          port: 4001,
+          port: 3003,
         },
       },
       {
         name: MICROSERVICE_CLIENTS.PRODUCTS_SERVICE,
         transport: Transport.TCP,
         options: {
-          port: 4002,
-        },
-      },
-      {
-        name: MICROSERVICE_CLIENTS.USER_SERVICE,
-        transport: Transport.TCP,
-        options: {
-          port: 4003,
+          port: 3004,
         },
       },
     ]),
