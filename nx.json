@@ -61,7 +61,8 @@
         "apps/product-e2e/**/*",
         "apps/Catalog-e2e/**/*",
         "apps/orders-e2e/**/*",
-        "apps/payments-e2e/**/*"
+        "apps/payments-e2e/**/*",
+        "apps/notifications-e2e/**/*"
       ]
     }
   ],
