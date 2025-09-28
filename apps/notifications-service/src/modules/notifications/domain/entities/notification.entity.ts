@@ -12,7 +12,7 @@ import { NotificationStatus } from '../enum/notification-status.enum';
 @Entity({ name: 'notifications' })
 @Index(['userId', 'createdAt'])
 @Index(['status', 'createdAt'])
-export class Notification {
+export class NotificationEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 

@@ -1,5 +1,5 @@
 {
-  "name": "@nx-microserv/notifications",
+  "name": "@nx-microserv/notifications-service",
   "version": "0.0.1",
   "private": true,
   "nx": {
@@ -11,7 +11,7 @@
           "args": [
             "--node-env=production"
           ],
-          "cwd": "apps/notifications"
+          "cwd": "apps/notifications-service"
         },
         "configurations": {
           "development": {
@@ -28,8 +28,8 @@
         "cache": true,
         "executor": "@nx/js:prune-lockfile",
         "outputs": [
-          "{workspaceRoot}/apps/notifications/dist/package.json",
-          "{workspaceRoot}/apps/notifications/dist/package-lock.json"
+          "{workspaceRoot}/apps/notifications-service/dist/package.json",
+          "{workspaceRoot}/apps/notifications-service/dist/package-lock.json"
         ],
         "options": {
           "buildTarget": "build"
@@ -41,7 +41,7 @@
         ],
         "cache": true,
         "outputs": [
-          "{workspaceRoot}/apps/notifications/dist/workspace_modules"
+          "{workspaceRoot}/apps/notifications-service/dist/workspace_modules"
         ],
         "executor": "@nx/js:copy-workspace-modules",
         "options": {
@@ -63,15 +63,15 @@
           "build"
         ],
         "options": {
-          "buildTarget": "@nx-microserv/notifications:build",
+          "buildTarget": "@nx-microserv/notifications-service:build",
           "runBuildTargetDependencies": false
         },
         "configurations": {
           "development": {
-            "buildTarget": "@nx-microserv/notifications:build:development"
+            "buildTarget": "@nx-microserv/notifications-service:build:development"
           },
           "production": {
-            "buildTarget": "@nx-microserv/notifications:build:production"
+            "buildTarget": "@nx-microserv/notifications-service:build:production"
           }
         }
       },

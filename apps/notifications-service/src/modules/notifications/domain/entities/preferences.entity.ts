@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'preferences' })
-export class Preferences {
+export class PreferencesEntity {
   @PrimaryColumn('uuid')
   userId!: string;
 

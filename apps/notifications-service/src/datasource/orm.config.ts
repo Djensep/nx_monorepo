@@ -2,13 +2,17 @@ import { join } from 'path';
 import { config } from 'dotenv';
 import { ConfigService } from '@nestjs/config';
 import { DataSourceOptions } from 'typeorm';
-import { DataSource } from 'typeorm/browser';
+import { NotificationEntity } from '../modules/notifications/domain/entities/notification.entity';
+import { OutboxEntity } from '../modules/notifications/domain/entities/outbox.entity';
+import { PreferencesEntity } from '../modules/notifications/domain/entities/preferences.entity';
 
 config({ path: join(process.cwd(), '.env') });
 
 const configService = new ConfigService();
 
-const options = (): DataSourceOptions => {
+const ext = __filename.endsWith('.ts') ? 'ts' : 'js';
+
+const getOptions = (): DataSourceOptions => {
   const url = configService.get('DATABASE_URL');
   if (!url) throw new Error('Database url not found');
 
@@ -17,11 +21,11 @@ const options = (): DataSourceOptions => {
     type: 'postgres',
     schema: 'public',
     synchronize: true,
-    entities: [join(__dirname, '..', '..', '**', '*.entity.{ts,js}')],
-    migrations: [join(__dirname, '..', '..', '..', 'migrations', '*.{ts,js}')],
+    entities: [NotificationEntity, OutboxEntity, PreferencesEntity],
+    migrations: [join(__dirname, 'migrations', `*.${ext}`)],
     migrationsRun: false,
     migrationsTableName: 'migrations',
   };
 };
 
-export const ormConfig = new DataSource(options());
+export const ormConfig: DataSourceOptions = getOptions();
