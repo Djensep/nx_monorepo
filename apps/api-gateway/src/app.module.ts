@@ -2,13 +2,14 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app/app.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MICROSERVICE_CLIENTS } from './clients.enum';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ormConfig } from './datasource/orm.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule,
+    TypeOrmModule.forRoot(ormConfig),
     ClientsModule.register([
       {
         name: MICROSERVICE_CLIENTS.KAFKA_SERVICE,
