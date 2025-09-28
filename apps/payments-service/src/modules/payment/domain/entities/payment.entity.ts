@@ -11,7 +11,7 @@ import { PaymentStatus } from '../enums/payment-status.enum';
 @Entity({ name: 'payments' })
 @Index(['orderId'], { unique: true })
 @Index(['status', 'createdAt'])
-export class Payment {
+export class PaymentEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 

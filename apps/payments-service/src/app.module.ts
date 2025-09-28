@@ -1,23 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app/app.controller';
-import { AppService } from './app/app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigService } from '@nestjs/config';
-import { join } from 'path';
+import { ormConfig } from './datasource/orm.config';
 
 @Module({
-  imports: [
-    TypeOrmModule.forRootAsync({
-      useFactory: (configService: ConfigService) => ({
-        url: configService.get('DATABASE_URL'),
-        type: 'postgres',
-        schema: 'public',
-        synchronize: true,
-        entities: [join(__dirname, '..', '..', '**', '*.entity.{ts,js}')],
-      }),
-    }),
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [TypeOrmModule.forRoot(ormConfig)],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

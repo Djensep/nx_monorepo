@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { DataSourceOptions } from 'typeorm';
 import { OrderEntity } from '../modules/orders/domain/entities/order.entity';
 import { OutboxEntity } from '../modules/orders/domain/entities/outbox.entity';
+import { ProcessedEventEntity } from '../modules/orders/domain/entities/processed-event.entity';
 
 config({ path: join(process.cwd(), '.env') });
 
@@ -20,7 +21,7 @@ const getOptions = (): DataSourceOptions => {
     type: 'postgres',
     schema: 'public',
     synchronize: true,
-    entities: [OrderEntity, OutboxEntity],
+    entities: [OrderEntity, OutboxEntity, ProcessedEventEntity],
     migrations: [join(__dirname, 'migrations', `*.${ext}`)],
     migrationsRun: false,
     migrationsTableName: 'migrations',

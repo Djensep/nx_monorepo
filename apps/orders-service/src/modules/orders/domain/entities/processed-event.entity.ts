@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'processed_events' })
-export class ProcessedEvent {
+export class ProcessedEventEntity {
   @PrimaryColumn({ type: 'varchar' })
   eventId!: string;
 

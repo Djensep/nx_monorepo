@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'idempotency_keys' })
-export class IdempotencyKey {
+export class IdempotencyKeyEntity {
   // ключ из заголовка Idempotency-Key
   @PrimaryColumn({ type: 'varchar' })
   key!: string;
