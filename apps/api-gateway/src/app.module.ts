@@ -3,21 +3,12 @@ import { AppController } from './app/app.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MICROSERVICE_CLIENTS } from './clients.enum';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigService } from '@nestjs/config';
-import { join } from 'path';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRootAsync({
-      useFactory: (configService: ConfigService) => ({
-        url: configService.get('DATABASE_URL'),
-        type: 'postgres',
-        schema: 'public',
-        synchronize: true,
-        entities: [join(__dirname, '..', '..', '**', '*.entity.{ts,js}')],
-      }),
-    }),
-
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule,
     ClientsModule.register([
       {
         name: MICROSERVICE_CLIENTS.KAFKA_SERVICE,

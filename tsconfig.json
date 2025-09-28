@@ -7,22 +7,13 @@
       "path": "./apps/api-gateway"
     },
     {
-      "path": "./apps/catalog"
+      "path": "./apps/notifications-service"
     },
     {
-      "path": "./apps/Catalog"
+      "path": "./apps/payments-service"
     },
     {
-      "path": "./apps/orders"
-    },
-    {
-      "path": "./apps/payments"
-    },
-    {
-      "path": "./apps/notifications-e2e"
-    },
-    {
-      "path": "./apps/notifications"
+      "path": "./apps/orders-service"
     }
   ]
 }
