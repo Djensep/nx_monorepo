@@ -10,7 +10,7 @@ import { OrderStatus } from '../enum/OrderStatus';
 
 @Entity({ name: 'orders' })
 @Index(['status', 'createdAt'])
-export class OrderEntityEntity {
+export class OrderEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 

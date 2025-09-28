@@ -1,5 +1,5 @@
 {
-  "name": "@nx-microserv/orders",
+  "name": "@nx-microserv/orders-service",
   "version": "0.0.1",
   "private": true,
   "nx": {
@@ -11,7 +11,7 @@
           "args": [
             "--node-env=production"
           ],
-          "cwd": "apps/orders"
+          "cwd": "apps/orders-service"
         },
         "configurations": {
           "development": {
@@ -28,8 +28,8 @@
         "cache": true,
         "executor": "@nx/js:prune-lockfile",
         "outputs": [
-          "{workspaceRoot}/apps/orders/dist/package.json",
-          "{workspaceRoot}/apps/orders/dist/package-lock.json"
+          "{workspaceRoot}/apps/orders-service/dist/package.json",
+          "{workspaceRoot}/apps/orders-service/dist/package-lock.json"
         ],
         "options": {
           "buildTarget": "build"
@@ -41,7 +41,7 @@
         ],
         "cache": true,
         "outputs": [
-          "{workspaceRoot}/apps/orders/dist/workspace_modules"
+          "{workspaceRoot}/apps/orders-service/dist/workspace_modules"
         ],
         "executor": "@nx/js:copy-workspace-modules",
         "options": {
@@ -63,15 +63,15 @@
           "build"
         ],
         "options": {
-          "buildTarget": "@nx-microserv/orders:build",
+          "buildTarget": "@nx-microserv/orders-service:build",
           "runBuildTargetDependencies": false
         },
         "configurations": {
           "development": {
-            "buildTarget": "@nx-microserv/orders:build:development"
+            "buildTarget": "@nx-microserv/orders-service:build:development"
           },
           "production": {
-            "buildTarget": "@nx-microserv/orders:build:production"
+            "buildTarget": "@nx-microserv/orders-service:build:production"
           }
         }
       }
