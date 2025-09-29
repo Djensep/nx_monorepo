@@ -2,27 +2,27 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'user' })
+@Entity('users')
 export class UserEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn('uuid')
+  id: string;
 
   @Column({ unique: true })
   email: string;
 
   @Column()
+  name: string;
+
+  @Column({ name: 'password_hash' })
   passwordHash: string;
 
-  @Column({ default: 'USER' })
-  role: 'USER' | 'ADMIN';
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt!: Date;
 
-  @CreateDateColumn({ type: 'timestamptz' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamptz' })
-  updatedAt: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt!: Date;
 }
