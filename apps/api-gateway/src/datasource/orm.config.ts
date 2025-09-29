@@ -4,13 +4,13 @@ import { ConfigService } from '@nestjs/config';
 import { DataSourceOptions } from 'typeorm';
 import { UserEntity } from '../modules/entity/users.entity';
 
-config({ path: join(process.cwd(), '.env') });
-
-const configService = new ConfigService();
-
-const ext = __filename.endsWith('.ts') ? 'ts' : 'js';
-
 const options = (): DataSourceOptions => {
+  config({ path: join(__dirname, '..', '.env') });
+
+  const configService = new ConfigService();
+
+  const ext = __filename.endsWith('.ts') ? 'ts' : 'js';
+
   const url = configService.get('DATABASE_URL');
   if (!url) throw new Error('Database url is empty');
 

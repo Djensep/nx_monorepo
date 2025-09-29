@@ -5,6 +5,7 @@ import { MICROSERVICE_CLIENTS } from './clients.enum';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ormConfig } from './datasource/orm.config';
+import { HealthCheck } from './modules/healthch/healthch.controller';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { ormConfig } from './datasource/orm.config';
       },
     ]),
   ],
-  controllers: [AppController],
+  controllers: [AppController, HealthCheck],
   providers: [],
 })
 export class AppModule {}

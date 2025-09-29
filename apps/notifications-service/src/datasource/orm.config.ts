@@ -6,13 +6,14 @@ import { NotificationEntity } from '../modules/notifications/domain/entities/not
 import { OutboxEntity } from '../modules/notifications/domain/entities/outbox.entity';
 import { PreferencesEntity } from '../modules/notifications/domain/entities/preferences.entity';
 
-config({ path: join(process.cwd(), '.env') });
-
-const configService = new ConfigService();
-
-const ext = __filename.endsWith('.ts') ? 'ts' : 'js';
-
 const getOptions = (): DataSourceOptions => {
+  config({
+    path: join(process.cwd(), '..', '.env'),
+  });
+
+  const configService = new ConfigService();
+
+  const ext = __filename.endsWith('.ts') ? 'ts' : 'js';
   const url = configService.get('DATABASE_URL');
   if (!url) throw new Error('Database url not found');
 
