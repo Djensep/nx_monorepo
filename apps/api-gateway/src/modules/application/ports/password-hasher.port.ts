@@ -1,4 +1,4 @@
-export interface PasswordHasherPort {
-  hash(plain: string): Promise<string>;
-  compare(plain: string, hash: string): Promise<boolean>;
+export abstract class PasswordHasherPort {
+  abstract hash(plain: string): Promise<string>;
+  abstract compare(plain: string, hash: string): Promise<boolean>;
 }

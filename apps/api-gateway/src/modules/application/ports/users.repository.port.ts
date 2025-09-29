@@ -1,6 +1,6 @@
 import { User } from '../../domain/entities/user';
 
-export interface UsersRepositoryPort {
-  findByEmail(email: string): Promise<User | null>;
-  save(user: User): Promise<void>;
+export abstract class UsersRepositoryPort {
+  abstract findByEmail(email: string): Promise<User | null>;
+  abstract save(user: User): Promise<void>;
 }
