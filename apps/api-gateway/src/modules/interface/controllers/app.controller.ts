@@ -1,6 +1,7 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { MICROSERVICE_CLIENTS } from '../../clients.enum';
+import { MICROSERVICE_CLIENTS } from '../../../clients.enum';
 import { ClientKafka } from '@nestjs/microservices';
+import { RegisterUserDto } from '../dtos/register-user.dto';
 
 @Controller()
 export class AppController {
