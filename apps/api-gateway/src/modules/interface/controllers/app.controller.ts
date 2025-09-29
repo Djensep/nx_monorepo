@@ -1,24 +1,32 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { MICROSERVICE_CLIENTS } from '../../../clients.enum';
-import { ClientKafka } from '@nestjs/microservices';
-import { RegisterUserDto } from '../dtos/register-user.dto';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
+import { RegisterRequestDto } from '../dtos/register.request.dto';
+import { EmailAlreadyInUseError } from '../../application/errors/email-already-in-use.error';
+import { RegisterUserUseCase } from '../../application/use-cases/register-user.use-case';
+import { toRegisterResponse } from '../mappers/app-to-http.mapper';
+import { toRegisterInput } from '../mappers/http-to-app.mapper';
 
 @Controller()
 export class AppController {
-  constructor(
-    @Inject(MICROSERVICE_CLIENTS.KAFKA_SERVICE)
-    private readonly kafkaClient: ClientKafka
-  ) {}
+  constructor(private readonly registerUser: RegisterUserUseCase) {}
 
   @Post('register')
-  async registerUser(@Body() dtoData: RegisterUserDto) {}
-
-  @Post('login')
-  async loginUser() {}
-
-  @Post('refresh')
-  async refreshToken() {}
-
-  @Post('logout')
-  async logoutUser() {}
+  @HttpCode(HttpStatus.CREATED)
+  async register(@Body() dto: RegisterRequestDto) {
+    try {
+      const result = await this.registerUser.execute(toRegisterInput(dto));
+      return toRegisterResponse(result);
+    } catch (e) {
+      if (e instanceof EmailAlreadyInUseError) {
+        throw new HttpException(e.message, HttpStatus.CONFLICT);
+      }
+      throw e;
+    }
+  }
 }
