@@ -18,8 +18,9 @@ export class UsersRepository implements UsersRepositoryPort {
     return row ? UserMapper.toDomain(row) : null;
   }
 
-  async save(user: User): Promise<void> {
+  async save(user: User): Promise<number> {
     const row = UserMapper.toOrm(user);
-    await this.repo.save(row);
+    const newRow = await this.repo.save(row);
+    return newRow.id;
   }
 }

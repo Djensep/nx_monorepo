@@ -1,5 +1,5 @@
 export interface RegisterUserResult {
-  id: string;
+  id: number;
   email: string;
   name: string;
 }

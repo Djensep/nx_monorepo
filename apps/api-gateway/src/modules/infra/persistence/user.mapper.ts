@@ -5,7 +5,6 @@ import { UserEntity } from './user.entity';
 export class UserMapper {
   static toDomain(row: UserEntity): User {
     return new User(
-      row.id,
       row.email,
       row.name,
       PasswordHash.fromHashed(row.passwordHash)
@@ -14,7 +13,6 @@ export class UserMapper {
 
   static toOrm(user: User): UserEntity {
     const orm = new UserEntity();
-    orm.id = user.getId();
     orm.email = user.getEmail();
     orm.name = user.getName();
     orm.passwordHash = user.getPasswordHash().unwrap();

@@ -8,17 +8,21 @@ import { BcryptPasswordHasher } from './modules/infra/security/bcrypt.password-h
 import { UserEntity } from './modules/infra/persistence/user.entity';
 import { AuthController } from './modules/interface/controllers/auth.controller';
 
+const providers = [
+  RegisterUserUseCase,
+  { provide: UsersRepositoryPort, useClass: UsersRepository },
+  { provide: PasswordHasherPort, useClass: BcryptPasswordHasher },
+];
+
+const exportProviders = [
+  RegisterUserUseCase,
+  { provide: UsersRepositoryPort, useClass: UsersRepository },
+];
+
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
   controllers: [AuthController],
-  providers: [
-    RegisterUserUseCase,
-    { provide: UsersRepositoryPort, useClass: UsersRepository },
-    { provide: PasswordHasherPort, useClass: BcryptPasswordHasher },
-  ],
-  exports: [
-    RegisterUserUseCase,
-    { provide: UsersRepositoryPort, useClass: UsersRepository },
-  ],
+  providers: [...providers],
+  exports: [...exportProviders],
 })
 export class AccountsModule {}
