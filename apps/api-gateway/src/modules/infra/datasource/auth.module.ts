@@ -4,8 +4,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from '../../domain/entities/users.entity';
 
-export const JWT_SECRET_TOKEN = 'JWT_SECRET';
-
 @Module({})
 export class AuthModule {
   static forRootAsync(): DynamicModule {
