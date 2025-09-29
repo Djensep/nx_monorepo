@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { config } from 'dotenv';
 import { ConfigService } from '@nestjs/config';
-import { DataSource, DataSourceOptions } from 'typeorm';
+import { DataSourceOptions } from 'typeorm';
 import { UserEntity } from '../modules/entity/users.entity';
 
 config({ path: join(process.cwd(), '.env') });
