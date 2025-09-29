@@ -2,7 +2,7 @@ import { join } from 'path';
 import { config } from 'dotenv';
 import { ConfigService } from '@nestjs/config';
 import { DataSourceOptions } from 'typeorm';
-import { UserEntity } from '../modules/entity/users.entity';
+import { UserEntity } from '../modules/domain/entities/users.entity';
 
 const options = (): DataSourceOptions => {
   config({ path: join(__dirname, '..', '.env') });

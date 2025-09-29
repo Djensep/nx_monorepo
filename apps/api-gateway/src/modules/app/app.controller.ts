@@ -1,5 +1,5 @@
-import { Controller, Inject, Post } from '@nestjs/common';
-import { MICROSERVICE_CLIENTS } from '../clients.enum';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { MICROSERVICE_CLIENTS } from '../../clients.enum';
 import { ClientKafka } from '@nestjs/microservices';
 
 @Controller()
@@ -10,7 +10,7 @@ export class AppController {
   ) {}
 
   @Post('register')
-  async registerUser() {}
+  async registerUser(@Body() dtoData: RegisterUserDto) {}
 
   @Post('login')
   async loginUser() {}
