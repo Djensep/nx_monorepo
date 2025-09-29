@@ -6,23 +6,23 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'users' })
+@Entity({ name: 'user' })
 export class UserEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ type: 'varchar', unique: true })
-  email!: string;
+  @Column({ unique: true })
+  email: string;
 
-  @Column({ type: 'varchar' })
-  passwordHash!: string;
+  @Column()
+  passwordHash: string;
 
-  @Column({ type: 'varchar', default: 'USER' })
-  role!: 'USER' | 'ADMIN';
+  @Column({ default: 'USER' })
+  role: 'USER' | 'ADMIN';
 
   @CreateDateColumn({ type: 'timestamptz' })
-  createdAt!: Date;
+  createdAt: Date;
 
   @UpdateDateColumn({ type: 'timestamptz' })
-  updatedAt!: Date;
+  updatedAt: Date;
 }
