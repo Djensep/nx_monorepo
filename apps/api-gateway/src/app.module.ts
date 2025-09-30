@@ -3,10 +3,10 @@ import { AppController } from './modules/interface/controllers/app.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MICROSERVICE_CLIENTS } from './clients.enum';
 import { ConfigModule } from '@nestjs/config';
-import { HealthCheck } from './modules/healthch/healthch.controller';
 import { AuthModule } from './modules/infra/datasource/auth.module';
 import path from 'path';
 import { AccountsModule } from './accounts.module';
+import { HealthCheck } from './modules/interface/controllers/healthch.controller';
 
 @Module({
   imports: [
