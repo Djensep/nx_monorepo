@@ -82,4 +82,20 @@ describe('Register new user', () => {
     expect(hasher.hash).not.toHaveBeenCalled();
     expect(usersRepo.save).not.toHaveBeenCalled();
   });
+
+  it('Should always transform email to lower-case', async () => {
+    const input = { email: 'MiXeD@Mail.Com', name: 'N', password: 'p' };
+    usersRepo.findByEmail.mockResolvedValue(null);
+    hasher.hash.mockResolvedValue('h');
+    let savedUser: User | null = null;
+    usersRepo.save.mockImplementation(async (u: User) => {
+      savedUser = u;
+      return Math.floor(Math.random() * 100);
+    });
+
+    await useCase.execute(input);
+
+    expect(usersRepo.findByEmail).toHaveBeenCalledWith('mixed@mail.com');
+    expect(savedUser!.getEmail()).toBe('mixed@mail.com');
+  });
 });
