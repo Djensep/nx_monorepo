@@ -1,6 +1,14 @@
 export default {
-  displayName: '@nx-microserv/api-gateway',
+  displayName: 'api-gateway',
   preset: '../../jest.preset.js',
   testEnvironment: 'node',
-  coverageDirectory: 'test-output/jest/coverage',
+  transform: {
+    '^.+\\.[tj]s$': [
+      'ts-jest',
+      { useESM: true, tsconfig: '<rootDir>/tsconfig.spec.json' },
+    ],
+  },
+  extensionsToTreatAsEsm: ['.ts'],
+  moduleFileExtensions: ['ts', 'js', 'html'],
+  coverageDirectory: '../../coverage/apps/api-gateway',
 };
