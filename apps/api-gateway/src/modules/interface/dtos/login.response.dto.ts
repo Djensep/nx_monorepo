@@ -1,5 +1,8 @@
 export class LoginResponseDto {
-  email: string;
-  password: string;
+  user: {
+    id: number;
+    email: string;
+    name: string;
+  };
   accessToken: string;
 }

@@ -29,6 +29,9 @@ export class RegisterUserUseCase {
 
     const id = await this.usersRepo.save(user);
 
-    return { id, email: user.getEmail(), name: user.getName() };
+    return {
+      user: { id, email: user.getEmail(), name: user.getName() },
+      accessToken: '',
+    };
   }
 }

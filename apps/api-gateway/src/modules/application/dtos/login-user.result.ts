@@ -1,4 +1,4 @@
-export class RegisterResponseDto {
+export interface LoginUserResult {
   user: {
     id: number;
     email: string;

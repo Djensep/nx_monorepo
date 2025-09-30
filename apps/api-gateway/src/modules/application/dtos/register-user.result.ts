@@ -1,5 +1,8 @@
 export interface RegisterUserResult {
-  id: number;
-  email: string;
-  name: string;
+  user: {
+    id: number;
+    email: string;
+    name: string;
+  };
+  accessToken: string;
 }
