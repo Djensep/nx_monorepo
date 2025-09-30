@@ -1,4 +1,6 @@
 import { User } from '../../domain/entities/user';
+import { PasswordHash } from '../../domain/value-objects/password-hash.vo';
+import { EmailAlreadyInUseError } from '../errors/email-already-in-use.error';
 import { PasswordHasherPort } from '../ports/password-hasher.port';
 import { UsersRepositoryPort } from '../ports/users.repository.port';
 import { RegisterUserUseCase } from './register-user.use-case';
@@ -56,5 +58,28 @@ describe('Register new user', () => {
       email: lowered,
       name: input.name,
     });
+  });
+
+  it('Should throw EmailAlreadyInUseError if email already exist', async () => {
+    const input = {
+      email: 'TeSt@Example.com',
+      name: 'John',
+      password: 'hashed_password_123asd',
+    };
+
+    const existing = User.register({
+      email: input.email.toLowerCase(),
+      name: input.name,
+      passwordHash: PasswordHash.fromHashed(input.password),
+    });
+
+    usersRepo.findByEmail.mockResolvedValue(existing);
+
+    await expect(useCase.execute(input)).rejects.toBeInstanceOf(
+      EmailAlreadyInUseError
+    );
+
+    expect(hasher.hash).not.toHaveBeenCalled();
+    expect(usersRepo.save).not.toHaveBeenCalled();
   });
 });
