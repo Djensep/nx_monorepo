@@ -5,7 +5,8 @@ export class User {
     private email: string,
     private name: string,
     private passwordHash: PasswordHash,
-    private id?: number
+    private id?: number,
+    private refreshToken?: string
   ) {}
 
   static register(params: {
@@ -15,6 +16,10 @@ export class User {
     id?: number;
   }): User {
     return new User(params.email, params.name, params.passwordHash);
+  }
+
+  getRefreshToken() {
+    return this.refreshToken;
   }
 
   getId() {

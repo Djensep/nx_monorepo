@@ -4,5 +4,6 @@ export interface RegisterUserResult {
     email: string;
     name: string;
   };
+  refreshToken?: string;
   accessToken: string;
 }
