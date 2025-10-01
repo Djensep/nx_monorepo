@@ -20,6 +20,9 @@ export class UserEntity {
   @Column({ name: 'password_hash' })
   passwordHash: string;
 
+  @Column({ name: 'refresh_token', type: 'varchar', default: null })
+  refreshToken: string | null;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 
