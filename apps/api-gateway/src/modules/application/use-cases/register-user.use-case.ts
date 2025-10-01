@@ -30,7 +30,12 @@ export class RegisterUserUseCase {
     const id = await this.usersRepo.save(user);
 
     return {
-      user: { id, email: user.getEmail(), name: user.getName() },
+      user: {
+        id,
+        email: user.getEmail(),
+        name: user.getName(),
+      },
+      refreshToken: user.getRefreshToken() || '',
       accessToken: '',
     };
   }

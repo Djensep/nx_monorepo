@@ -29,6 +29,7 @@ export class LoginUserUseCase {
         email: exist.getEmail(),
         name: exist.getName(),
       },
+      refreshToken: exist.getRefreshToken(),
       accessToken: '',
     };
   }
