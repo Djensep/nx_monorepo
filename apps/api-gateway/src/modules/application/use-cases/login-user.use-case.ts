@@ -4,12 +4,14 @@ import { PasswordHasherPort } from '../ports/password-hasher.port';
 import { LoginUserInput } from '../dtos/login-user.input';
 import { InvalidCredentialsError } from '../errors/invalid-credentials.error';
 import { LoginUserResult } from '../dtos/login-user.result';
+import { JwtPort } from '../ports/jwt.port';
 
 @Injectable()
 export class LoginUserUseCase {
   constructor(
     private readonly usersRepo: UsersRepositoryPort,
-    private readonly hasher: PasswordHasherPort
+    private readonly hasher: PasswordHasherPort,
+    private readonly jwt: JwtPort
   ) {}
 
   async execute(input: LoginUserInput): Promise<LoginUserResult> {
@@ -21,16 +23,31 @@ export class LoginUserUseCase {
       input.password,
       exist.getPasswordHash().unwrap()
     );
-    if (!isPasswordMatches) throw new InvalidCredentialsError();
     const id = exist.getId() ?? 0;
+
+    if (!isPasswordMatches) throw new InvalidCredentialsError();
+    const payload = {
+      id: id,
+    };
+
+    const accessToken = this.jwt.sign(payload, {
+      expiresIn: '15m',
+    });
+
+    const refreshToken = this.jwt.sign(payload, {
+      expiresIn: '7d',
+    });
+
+    await this.usersRepo.setRefreshToken(id, refreshToken);
+
     return {
       user: {
         id,
         email: exist.getEmail(),
         name: exist.getName(),
       },
-      refreshToken: exist.getRefreshToken(),
-      accessToken: '',
+      accessToken,
+      refreshToken,
     };
   }
 }

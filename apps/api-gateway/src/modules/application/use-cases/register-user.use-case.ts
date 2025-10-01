@@ -6,12 +6,14 @@ import { RegisterUserInput } from '../dtos/register-user.input';
 import { RegisterUserResult } from '../dtos/register-user.result';
 import { UsersRepositoryPort } from '../ports/users.repository.port';
 import { PasswordHasherPort } from '../ports/password-hasher.port';
+import { JwtPort } from '../ports/jwt.port';
 
 @Injectable()
 export class RegisterUserUseCase {
   constructor(
     private readonly usersRepo: UsersRepositoryPort,
-    private readonly hasher: PasswordHasherPort
+    private readonly hasher: PasswordHasherPort,
+    private readonly jwt: JwtPort
   ) {}
 
   async execute(input: RegisterUserInput): Promise<RegisterUserResult> {
@@ -28,6 +30,16 @@ export class RegisterUserUseCase {
     });
 
     const id = await this.usersRepo.save(user);
+    const payload = { id };
+
+    const accessToken = this.jwt.sign(payload, {
+      expiresIn: '15m',
+    });
+    const refreshToken = this.jwt.sign(payload, {
+      expiresIn: '7d',
+    });
+
+    await this.usersRepo.setRefreshToken(id, refreshToken);
 
     return {
       user: {
@@ -35,8 +47,8 @@ export class RegisterUserUseCase {
         email: user.getEmail(),
         name: user.getName(),
       },
-      refreshToken: user.getRefreshToken() || '',
-      accessToken: '',
+      refreshToken,
+      accessToken,
     };
   }
 }

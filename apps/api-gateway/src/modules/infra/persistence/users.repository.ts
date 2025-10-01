@@ -18,24 +18,23 @@ export class UsersRepository implements UsersRepositoryPort {
     return row ? UserMapper.toDomain(row) : null;
   }
 
+  async findByRToken(refreshToken: string): Promise<User | null> {
+    const row = await this.repo.findOneBy({ refreshToken });
+    return row ? UserMapper.toDomain(row) : null;
+  }
+
   async save(user: User): Promise<number> {
     const row = UserMapper.toOrm(user);
     const newRow = await this.repo.save(row);
     return newRow.id;
   }
 
-  async findByRToken(refreshToken: string): Promise<User | null> {
-    const row = await this.repo.findOneBy({ refreshToken });
-    return row ? UserMapper.toDomain(row) : null;
+  async logout(id: number): Promise<null> {
+    await this.repo.update({ id }, { refreshToken: null });
+    return null;
   }
 
-  async logout(id: number): Promise<null> {
-    const userOrm = await this.repo.findOneBy({ id });
-    if (!userOrm) return null;
-
-    userOrm.refreshToken = null;
-
-    await this.repo.update({ id }, userOrm);
-    return null;
+  async setRefreshToken(userId: number, refreshToken: string): Promise<void> {
+    await this.repo.update({ id: userId }, { refreshToken });
   }
 }

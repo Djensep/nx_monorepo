@@ -13,7 +13,6 @@ export class LogoutUserUseCase {
   async execute(refreshToken: string) {
     const tokenData = this.jwt.decode(refreshToken);
     if (!tokenData || typeof tokenData === 'string') throw new InvalidToken();
-
     await this.usersRepo.logout(tokenData.id);
   }
 }
