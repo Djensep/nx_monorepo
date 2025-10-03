@@ -1,6 +1,7 @@
 import { User } from '../../domain/entities/user';
 import { PasswordHash } from '../../domain/value-objects/password-hash.vo';
 import { EmailAlreadyInUseError } from '../errors/email-already-in-use.error';
+import { JwtPort } from '../ports/jwt.port';
 import { PasswordHasherPort } from '../ports/password-hasher.port';
 import { UsersRepositoryPort } from '../ports/users.repository.port';
 import { RegisterUserUseCase } from './register-user.use-case';
@@ -11,18 +12,27 @@ describe('Register new user', () => {
   let usersRepo: Mocked<UsersRepositoryPort>;
   let hasher: Mocked<PasswordHasherPort>;
   let useCase: RegisterUserUseCase;
+  let jwtPort: Mocked<JwtPort>;
 
   beforeEach(() => {
     usersRepo = {
       findByEmail: jest.fn(),
+      findByRToken: jest.fn(),
       save: jest.fn(),
+      logout: jest.fn(),
+      setRefreshToken: jest.fn(),
     };
     hasher = {
       hash: jest.fn(),
       compare: jest.fn(),
     };
+    jwtPort = {
+      decode: jest.fn(),
+      verify: jest.fn(),
+      sign: jest.fn(),
+    };
 
-    useCase = new RegisterUserUseCase(usersRepo, hasher);
+    useCase = new RegisterUserUseCase(usersRepo, hasher, jwtPort);
   });
   it('Should register new user', async () => {
     const input = {
@@ -44,14 +54,24 @@ describe('Register new user', () => {
       savedUser = u;
       return randomId;
     });
+
+    jwtPort.sign.mockReturnValue('signed_jwt_token');
+
     const result = await useCase.execute(input);
 
     expect(usersRepo.findByEmail).toHaveBeenCalledWith(lowered);
     expect(hasher.hash).toHaveBeenCalledWith(input.password);
     expect(usersRepo.save).toHaveBeenCalledTimes(1);
-
+    expect(usersRepo.setRefreshToken).toHaveBeenCalledWith(
+      randomId,
+      'signed_jwt_token'
+    );
     expect(savedUser).toBeInstanceOf(User);
     expect(savedUser!.getEmail()).toBe(lowered);
+    expect(jwtPort.sign).toHaveBeenCalledWith(
+      { id: randomId },
+      { secret: 'SECRET' }
+    );
 
     expect(result).toEqual({
       id: randomId,
