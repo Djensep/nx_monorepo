@@ -55,7 +55,9 @@ describe('Register new user', () => {
       return randomId;
     });
 
-    jwtPort.sign.mockReturnValue('signed_jwt_token');
+    jwtPort.sign
+      .mockReturnValueOnce('accessToken')
+      .mockReturnValueOnce('refreshToken');
 
     const result = await useCase.execute(input);
 
@@ -64,13 +66,20 @@ describe('Register new user', () => {
     expect(usersRepo.save).toHaveBeenCalledTimes(1);
     expect(usersRepo.setRefreshToken).toHaveBeenCalledWith(
       randomId,
-      'signed_jwt_token'
+      'refreshToken'
     );
     expect(savedUser).toBeInstanceOf(User);
     expect(savedUser!.getEmail()).toBe(lowered);
+
     expect(jwtPort.sign).toHaveBeenCalledWith(
+      1,
       { id: randomId },
-      { secret: 'SECRET' }
+      expect.objectContaining({ expiresIn: '15m' })
+    );
+    expect(jwtPort.sign).toHaveBeenCalledWith(
+      2,
+      { id: randomId },
+      expect.objectContaining({ expiresIn: '15m' })
     );
 
     expect(result).toEqual({
@@ -105,9 +114,12 @@ describe('Register new user', () => {
 
   it('Should always transform email to lower-case', async () => {
     const input = { email: 'MiXeD@Mail.Com', name: 'N', password: 'p' };
+
     usersRepo.findByEmail.mockResolvedValue(null);
-    hasher.hash.mockResolvedValue('h');
+    hasher.hash.mockResolvedValue('553ae7da92f5505a92bbb8c9d47be76ab9f65bc2');
+
     let savedUser: User | null = null;
+
     usersRepo.save.mockImplementation(async (u: User) => {
       savedUser = u;
       return Math.floor(Math.random() * 100);
