@@ -7,6 +7,7 @@ import { AuthModule } from './modules/infra/datasource/auth.module';
 import path from 'path';
 import { AccountsModule } from './accounts.module';
 import { HealthCheck } from './modules/interface/controllers/healthch.controller';
+import { KafkaInfraModule } from './modules/infra/kafka/kafka.module';
 
 @Module({
   imports: [
@@ -16,17 +17,10 @@ import { HealthCheck } from './modules/interface/controllers/healthch.controller
     }),
     AuthModule.forRootAsync(),
     AccountsModule,
-    ClientsModule.register([
-      {
-        name: MICROSERVICE_CLIENTS.KAFKA_SERVICE,
-        transport: Transport.KAFKA,
-        options: {
-          client: {
-            brokers: ['localhost:9092'],
-          },
-        },
-      },
-    ]),
+    KafkaInfraModule.register({
+      clientId: 'api-gateway',
+      brokers: ['localhost:9092'],
+    }),
   ],
   controllers: [AppController, HealthCheck],
   providers: [],
